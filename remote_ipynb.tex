@@ -36,4 +36,10 @@ The section provides a very explicit set of instructions to get up and running w
 If you're familiar with the command-line interface then you could skip to \emph{Automatic}, where they're condensed to shell functions, but it's probably worth going through this just once to make sure that everything is working smoothly.~Here I use \textbf{\$} to indicate the line is a command to be entered, while~\textbf{\#} denotes comments.
 Anything enclosed by \textbf{\textless{}\textgreater{}} must be replaced (including the brackets themselves) a specified value.
 
+\subsubsection{Run Notebook Server}
+
+The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH}~to remotely log into one of the machines in Pearson 110a and start up a Notebook server.
+Because of the way the Linux cluster is set up, this requires a two-step (or ``multi-hop'') log in.
+To make the first hop, open a new terminal and enter the following command, replacing \textless{}USER\textgreater{} with your UCL username and~\textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on~\href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
+
 \end{document}
