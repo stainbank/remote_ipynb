@@ -1,5 +1,7 @@
 \documentclass[a4paper]{article}
 
+\usepackage{listings}
+\lstset{language=bash, frame=single}
 \usepackage[pdftex]{hyperref} % must go last!
 
 % Title
@@ -38,8 +40,12 @@ Anything enclosed by \textbf{\textless{}\textgreater{}} must be replaced (includ
 
 \subsubsection{Run Notebook Server}
 
-The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH}~to remotely log into one of the machines in Pearson 110a and start up a Notebook server.
+The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.html}{Secure Shell (SSH)}~to remotely log into one of the machines in Pearson 110a and start up a Notebook server.
 Because of the way the Linux cluster is set up, this requires a two-step (or ``multi-hop'') log in.
-To make the first hop, open a new terminal and enter the following command, replacing \textless{}USER\textgreater{} with your UCL username and~\textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on~\href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
+To make the first hop, open a new terminal and enter the command in listing \ref{lst:logingw}, replacing \textless{}USER\textgreater{} with your UCL username and~\textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on~\href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
+
+\begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
+$ ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
+\end{lstlisting}
 
 \end{document}
