@@ -33,6 +33,7 @@ Whichever option you go for, you'll ~need to choose one from among the many \emp
 
 \section{On Linux/ Mac OS X}
 \subsection{Manual}
+\label{sec:manual}
 
 The section provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
 The listings boxes display commands to be entered into the terminal. \textbf{\textless{}\textgreater{}} enclose values which must be replaced as specified, while comments --- any text after \textbf{\#} --- do not need to be entered.
@@ -91,25 +92,71 @@ channel\emph{setup}fwd\_listener: cannot listen to port: \textless{}PORT\textgre
 Could not request local forwarding
 \end{quote}
 
-This means that the tunnel could not be established as another process is using that particular port. If this occurs, start everything over again with a different port number.
+This means that the tunnel could not be established as another process is using that particular port.
+If this occurs, start everything over again with a different port number.
 
 \subsection{Automatic}
 \label{sec:auto}
 
-It will very quickly become tedious to type out these commands perfectly every time you want to run a Notebook remotely.
-The two (\href{http://cs.lmu.edu/~ray/notes/bash/}{bash})~\href{https://www.shellscript.sh/functions.html}{functions}~below can be used to condense these lines to a few short commands.
+\subsubsection{Generate SSH keys}
+\label{sec:sshkeys}
+Following all the steps in \ref{sec:manual} require you to enter your password a total of four times, once for each SSH command.
+\href{https://wiki.archlinux.org/index.php/SSH_keys}{SSH keys} provide an alternative form of authentication, using a private and a public key to allow passwordless login over SSH.
+Two seperate pairs of keys must be set-up: one for the initial hop from your computer to the gateway node, and the other for the onward hop to the workstation.
 
-\lstinputlisting[caption={Functions to login/tunnel to geography cluster}, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
+To set up the first pair of keys, open a terminal on your computer and enter the command:
+\begin{lstlisting}[caption={Generate SSH keys}, label={lst:genkeys}]
+ssh-keygen -t rsa
+\end{lstlisting}
+Let the program use the default file with no passphrase by presssing enter twice, then copy the public key to the geography file network using command \ref{lst:cpkeys} and following the instructions returned by the program.
 
-The code in listing \ref{lst:gfuncs} does not display properly in a pdf and so will not work as-is. The original file containing these functions can be found at:
+\begin{lstlisting}[caption={Copy public key to geography file system}, label={lst:cpkeys}]
+ssh-copy-id <USER>@<GATEWAY>.geog.ucl.ac.uk
+\end{lstlisting}
 
-\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}
+To generate a pair of keys for the second hop, simply login to the any machine on the linux cluster and repeat the process.
+\footnote{You do not need to specify \textless{}USER\textgreater{}, nor finish the address with ``.geog.ucl.ac.uk'', as you are already within the geography network.}
 
-To ``install'' these two functions, open your~\href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file (located in the user root directory) with a text editor and paste in the entire code block, making the appropriate replacements to the default values before saving.
-If this file doesn't exist, \href{http://apple.stackexchange.com/a/119714}{as is the case on Mac OS X}, simply create it and then add the following line to the file .bash\_profile~(also in the user root directory): 
+\subsection{Geography login/tunnel functions}
+\label{sec:gfuncs}
 
-\begin{lstlisting}[caption={Source .bashrc}, label={lst:srcbashrc}]
+It will very quickly become tedious to perfectly type out the commands in section \href{sec:manual} every time you want to run a Notebook remotely.
+The two (\href{http://cs.lmu.edu/~ray/notes/bash/}{bash})~\href{https://www.shellscript.sh/functions.html}{functions}~in listing \ref{lst:gfuncs} can be used to condense these lines to a few short commands.
+
+\lstinputlisting[float, floatplacement=hpb, caption={Functions to login/tunnel to geography cluster}, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
+
+Be aware that listing \ref{lst:gfuncs} is for demonstration only; it does not display properly in a pdf document and so will not work if used as-is.
+Instead, raw text file containing these functions can be found at:
+{}
+
+\noindent\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}
+{}
+
+The simplest way to ``install'' these two functions is to paste the entire code block --- replacing the defaults as appropriate --- into a file in your home directorycalled \href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file.
+If this file doesn't already exist, \href{http://apple.stackexchange.com/a/119714}{as is the case on Mac OS X}, simply create it and then add the following line to the file .bash\_profile~(also in the user root directory):
+
+\begin{lstlisting}[caption={Source .bashrc on startup}, label={lst:srcbashrc}]
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+\end{lstlisting}
+
+The command \emph{geog} replaces the commands in listings \ref{lst:logingw} and \ref{lst:loginmach}, while \emph{geogport} replaces \ref{lst:tunnel1} and \ref{lst:tunnel2}.
+You can therefore work with a remote notebook by simply entering:
+\begin{lstlisting}[caption={Set up and tunnel to remote Notebook server}, label={lst:usegfuncs}]
+# In one terminal
+geog
+jupyter notebook --no-browser --port=<PORT>
+# In another terminal
+geogport
+\end{lstlisting}
+
+These functions also take positional arguments, in the order \emph{geog} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{} and \emph{geogport} \textless{}PORT\textgreater{} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}.
+This allows you to change any variables from their default values \footnote{You must supply all \emph{preceeding} arguments; prefix the an argument name with \textbf{\$} to use the default value}:
+
+\begin{lstlisting}[caption={Examples of arguments to geography login/tunnel functions}, label={lst:gfuncsargseg}]
+geog ulanbator # change machine
+geog $MACHINE triangle ucfaxyz # change user and gateway
+geogport 8889 # change port
+geogport $GPORT lima # change machine
 \end{lstlisting}
 
 \end{document}
