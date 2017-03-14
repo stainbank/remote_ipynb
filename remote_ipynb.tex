@@ -35,8 +35,8 @@ Whichever option you go for, you'll ~need to choose one from among the many \emp
 \subsection{Manual}
 
 The section provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
-If you're familiar with the command-line interface then you could skip to \emph{Automatic}, where they're condensed to shell functions, but it's probably worth going through this just once to make sure that everything is working smoothly.~Here I use \textbf{\$} to indicate the line is a command to be entered, while~\textbf{\#} denotes comments.
-Anything enclosed by \textbf{\textless{}\textgreater{}} must be replaced (including the brackets themselves) a specified value.
+The listings boxes display commands to be entered into the terminal. \textbf{\textless{}\textgreater{}} enclose values which must be replaced as specified, while comments --- any text after ~\textbf{\#} --- do not need to be entered.
+If you're familiar with the command-line interface then you could skip to \emph{Automatic}, where they're condensed to shell functions, but it's probably worth going through this just once to make sure that everything is working smoothly.
 
 \subsubsection{Run Notebook Server}
 
@@ -45,7 +45,19 @@ Because of the way the Linux cluster is set up, this requires a two-step (or ``m
 To make the first hop, open a new terminal and enter the command in listing \ref{lst:logingw}, replacing \textless{}USER\textgreater{} with your UCL username and~\textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on~\href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
 
 \begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
-$ ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
+ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
+
+After entering your password again, start running the Notebook server with command \ref{lst:runnb}.
+The flag ``--no-browser'' (note the double dash!) prevents Firefox from opening automatically, while ``--port'' tells the server to listen on a particular port number.
+This is 8888 by default, although you can choose just about any integer above 1026 to replace \textless{}PORT\textgreater{}.
+
+\begin{lstlisting}[caption={Run Notebook server}, label={lst:runnb}]
+jupyter notebook --no-browser --port=<PORT>
+\end{lstlisting}
+
+Jupyter should now inform you that ``The IPython Notebook is running at: \textless{}link\textgreater{}''.
+Without opening the link, check that the port number (after ``http://localhost:'') is the same the one you specified.
+If it has changed, simply note down the new number and use it as \textless{}PORT\textgreater{} for all subsequent commands. 
 
 \end{document}
