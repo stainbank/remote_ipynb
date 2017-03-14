@@ -50,6 +50,13 @@ To make the first hop, open a new terminal and enter the command in listing \ref
 ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
 
+You should be prompted for your Geography network password --- note that this is not necessarily the same password that you use for other UCL services.
+After supplying it, enter the command in \ref{lst:loginws}, replacing \textless{}MACHINE\textgreater{} with the name of your favourite teaching workstation in Pearson 110a \footnote{Note that, since you're already in the network, you can omit your username and ``.geog.ucl.ac.uk'' on the second hop.}(see href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{here} for a list). 
+
+\begin{lstlisting}[caption={Login to workstation}, label={lst:loginws}]
+ssh <MACHINE>
+\end{lstlisting}
+
 After entering your password again, start running the Notebook server with command \ref{lst:runnb}.
 The flag ``--no-browser'' prevents Firefox from opening automatically, while ``--port'' tells the server to listen on a particular port number.
 This is 8888 by default, although you can choose just about any integer above 1026 to replace \textless{}PORT\textgreater{}.
@@ -96,20 +103,27 @@ This means that the tunnel could not be established as another process is using 
 \subsection{Automatic}
 \label{sec:auto}
 
+\subsubsection{Functions}
 It will very quickly become tedious to type out these commands perfectly every time you want to run a Notebook remotely.
 The two (\href{http://cs.lmu.edu/~ray/notes/bash/}{bash})~\href{https://www.shellscript.sh/functions.html}{functions}~below can be used to condense these lines to a few short commands.
 
-\lstinputlisting[caption={Functions to login/tunnel to geography cluster}, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
+\lstinputlisting[caption=\lstname, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
 
-The code in listing \ref{lst:gfuncs} does not display properly in a pdf and so will not work as-is. The original file containing these functions can be found at:
+\textbf{Warning:} The code in listing \ref{lst:gfuncs} does not display properly in a pdf and so will not work as-is. The original file containing these functions can be found at:
 
 \url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}
 
-To ``install'' these two functions, open your~\href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file (located in the user root directory) with a text editor and paste in the entire code block, making the appropriate replacements to the default values before saving.
+\subsubsection{Usage}
+
+To use these two functions, you must first ``install'' them. Look in your user root directory for a file called \href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}
 If this file doesn't exist, \href{http://apple.stackexchange.com/a/119714}{as is the case on Mac OS X}, simply create it and then add the following line to the file .bash\_profile~(also in the user root directory): 
 
 \begin{lstlisting}[caption={Source .bashrc}, label={lst:srcbashrc}]
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 \end{lstlisting}
+
+Finally, open your .bashrc file with a text editor and paste in the entire code block, making the appropriate replacements to the default values before saving.
+
+The function geog replaces the commands \ref{lst:logingw} and \ref{lst:loginws}, while geogport replaces \ref{lst:tunnel1} and \ref{lst:tunnel2}.
 
 \end{document}
