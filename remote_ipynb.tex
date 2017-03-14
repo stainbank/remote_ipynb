@@ -1,0 +1,39 @@
+\documentclass[a4paper]{article}
+
+\usepackage[pdftex]{hyperref} % must go last!
+
+% Title
+\title{Remotely work with Jupyter(IPython) notebooks on the UCL Geography Linux cluster}
+\author{Chad Stainbank}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+\subsection{What is this?}
+
+The \href{http://jupyter.org/}{Jupyter Notebook}~(previously IPython Notebook)~provides a feature-rich~interactive environment for learning and using the \href{https://www.python.org/}{Python Programming language}.
+If you're studying for a BSc or MSc at the University College London Department of Geography then it's likely that you've encountered these Notebooks in one or more of your modules or in the preparation of a dissertation.
+Usually this will be from one of the workstations in Pearson 110a that forms part of the \href{http://www.geog.ucl.ac.uk/resources/computer-support/teaching-cluster}{Geography Linux Cluster}.
+Since physical access to Pearson 110a is not always practical, you may wish to have direct access to these files from another computer.
+This guide will show you how to \emph{remotely} run and work with Jupyter Notebooks hosted on the Linux Cluster in a manner that is fast.
+
+\subsection{Preamble on operating systems}
+
+While the machines in Pearson 110A run a~\emph{Linux} OS, it is likely that you use either \emph{Mac OS X} or \emph{Microsoft~Windows} on your own computer. The bulk of this guide is written for somebody using the terminal on a Linux computer, and Apple fans~should be able to enter all these same commands on the~\href{http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/}{Mac Terminal}. The \emph{On Windows~}section adapts these instructions for a Windows terminal emulator, although it is important to read \emph{On Linux} first.
+
+However, I strongly urge any Windows users intending on working extensively with Python and Jupyter Notebooks to consider installing a Linux distribution.
+Don't be alarmed: this need not be a drastic switch as there are two simple ways to set up Linux \emph{alongside} Windows.
+The first is to use a \emph{\href{https://www.howtogeek.com/196060/beginner-geek-how-to-create-and-use-virtual-machines/}{virtual machine}}, an OS that runs \emph{inside} your current system.
+This is very simple to setup (see \href{http://www.storagecraft.com/blog/the-dead-simple-guide-to-installing-a-linux-virtual-machine-on-windows/}{here}) and I myself use this method to work from UCL's library computers.
+The second option, and the one I use for my personal computer, is~\emph{\href{https://www.howtogeek.com/187789/dual-booting-explained-how-you-can-have-multiple-operating-systems-on-your-computer/}{dual-booting}.}~Although this is somewhat involved, a native Linux install is always faster than a virtual one and there are plenty of guides available online to guide you through the process (e.g. \href{https://itsfoss.com/guide-install-linux-mint-16-dual-boot-windows/}{1} \href{https://www.lifewire.com/ultimate-windows-7-ubuntu-linux-dual-boot-guide-2200653}{2}~\href{https://www.howtogeek.com/214571/how-to-dual-boot-linux-on-your-pc/}{3} \href{http://www.pcworld.com/article/2955460/operating-systems/dual-booting-linux-with-windows-what-you-need-to-know.html}{4}). 
+Whichever option you go for, you'll ~need to choose one from among the many \emph{\href{http://distrowatch.com/dwres.php?resource=major}{distributions}~}of Linux.
+\href{https://www.ubuntu.com/download}{Ubuntu}~and~\href{https://linuxmint.com/}{Linux Mint}~are most often suggested for beginners, and I would recommend opting for a more lightweight flavour (featuring MATE, Xfce or LXDE as the desktop environment) for use on a virtual machine or an ageing laptop.
+
+\section{On Linux/ Mac OS X}
+\subsection{Manual}
+
+The section provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
+If you're familiar with the command-line interface then you could skip to \emph{Automatic}, where they're condensed to shell functions, but it's probably worth going through this just once to make sure that everything is working smoothly.~Here I use \textbf{\$} to indicate the line is a command to be entered, while~\textbf{\#} denotes comments.
+Anything enclosed by \textbf{\textless{}\textgreater{}} must be replaced (including the brackets themselves) a specified value.
+
+\end{document}
