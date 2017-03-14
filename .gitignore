@@ -1,0 +1,9 @@
+# LaTeX/PDFLaTeX temporary files
+*.aux
+*.log
+*.out
+
+# Intermediate documents
+*.dvi
+.pdf
+# *.pdf
