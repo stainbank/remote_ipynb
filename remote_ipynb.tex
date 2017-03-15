@@ -21,8 +21,8 @@ This guide will show you how to work with Jupyter Notebooks, hosted on the Linux
 
 The bulk of this guide is written for somebody using the terminal on a Linux computer, the same OS running on the machines in Pearson 110A.
 However, it is likely that your own computer runs on either \emph{Mac OS X} (\emph{macOS}) or \emph{Microsoft Windows}.
-Since macOS is a \href{http://unix.stackexchange.com/questions/1489/is-mac-os-x-unix}{Unix-based} operating system, Apple fans should be able to enter all these same commands in section \ref{sec:linuxmac} the \href{http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/}{Mac Terminal} with little modification.
-For Windows users, on the other hand, there is a degree of set-up involved in order to get these commands to work: see section \ref{sec:windows}.
+Since macOS is a \href{http://unix.stackexchange.com/questions/1489/is-mac-os-x-unix}{Unix-based} operating system, Apple fans should be able to enter all these same commands in Section \ref{sec:linuxmac} the \href{http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/}{Mac Terminal} with little modification.
+For Windows users, on the other hand, there is a degree of set-up involved in order to get these commands to work: see Section \ref{sec:windows}.
 
 \section{On Linux/ Mac OS X}
 \label{sec:linuxmac}
@@ -30,16 +30,16 @@ For Windows users, on the other hand, there is a degree of set-up involved in or
 \label{sec:manual}
 
 The section provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
-The listings boxes display commands to be entered into the terminal. \textbf{\textless{}\textgreater{}} enclose values which must be replaced as specified, while comments --- any text after \textbf{\#} --- do not need to be entered.
+The Listings boxes display commands to be entered into the terminal. \textbf{\textless{}\textgreater{}} enclose values which must be replaced as specified, while comments --- any text after \textbf{\#} --- do not need to be entered.
 Since these commands may not always render properly, be careful to distinguish one dash ``-'' from two ``-{}-'' --- it should never be a long dash ``--''!
-If you're familiar with the command-line interface then you could skip to section \ref{sec:auto}, where they're condensed to shell functions, but it's probably worth going through this just once to make sure that everything is working smoothly.
+If you're familiar with the command-line interface then you could skip to Section \ref{sec:auto}, where they're condensed to shell functions, but it's probably worth going through this just once to make sure that everything is working smoothly.
 
 \subsubsection{Run Notebook Server}
 \label{sec:runnb}
 
 The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH}~to remotely log into one of the machines in Pearson 110a and start up a Notebook server.
 Because of the way the Linux cluster is set up, this requires a two-step (or ``multi-hop'') log in.
-To make the first hop, open a new terminal and enter the command in listing \ref{lst:logingw}, replacing \textless{}USER\textgreater{} with your UCL username and \textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
+To make the first hop, open a new terminal and enter the command in Listing \ref{lst:logingw}, replacing \textless{}USER\textgreater{} with your UCL username and \textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
 
 \begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
 ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
@@ -67,7 +67,7 @@ If it has changed, simply note down the new number and use it as \textless{}PORT
 \subsubsection{Set up SSH tunnel}
 \label{sec:tunnel}
 The next step is to create create an \href{http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html}{SSH tunnel}, through which you can connect to the Notebook server you just created.
-In a \textbf{new} terminal, enter the commands in listings \ref{lst:tunnel1} and \ref{lst:tunnel2}.
+In a \textbf{new} terminal, enter the commands in Listings \ref{lst:tunnel1} and \ref{lst:tunnel2}.
 Here, the ``-L'' flags tell SSH to use \href{https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding}{local port forwarding} to transfer data between nodes. 
 As before, replace the bracketed values and supply your password when prompted.
 
@@ -80,7 +80,7 @@ ssh -L <PORT>:localhost:<PORT> -N <MACHINE>
 \end{lstlisting}
 
 If all has gone well, the terminal will appear to be hanging \footnote{The optional ``-N'' flag prevents any more user input} and the SSH tunnel should be open.
-To use the Notebook, copy the link produced in section \ref{sec:runnb} (e.g.~\url{http://localhost:8888}) and paste it into the URL bar of your favourite browser. 
+To use the Notebook, copy the link produced in Section \ref{sec:runnb} (e.g.~\url{http://localhost:8888}) and paste it into the URL bar of your favourite browser. 
 Congratulations, you should now be looking at the familiar Jupyter Notebook file browser. If not, see \ref{sec:trouble} 
 
 \subsubsection{Troubleshooting}
@@ -122,13 +122,13 @@ To generate a pair of keys for the second hop, simply login to the any machine o
 \subsection{Geography login/tunnel functions}
 \label{sec:gfuncs}
 
-It will very quickly become tedious to perfectly type out the commands in section \ref{sec:manual} every time you want to run a Notebook remotely.
+It will very quickly become tedious to perfectly type out the commands in Section \ref{sec:manual} every time you want to run a Notebook remotely.
 The two \href{https://www.shellscript.sh/functions.html}{functions}~in listing
 \ref{lst:gfuncs} written for \href{http://cs.lmu.edu/~ray/notes/bash/}{bash}, condense all of these lines to a few short commands.
 
 \lstinputlisting[float, floatplacement=hpb, caption={Functions to login/tunnel to geography cluster}, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
 
-Be aware that listing \ref{lst:gfuncs} is for demonstration only; it does not display properly in a pdf document and so will not work if used as-is.
+Be aware that Listing \ref{lst:gfuncs} is for demonstration only; it does not display properly in a pdf document and so will not work if used as-is.
 Instead, raw text file containing these functions can be found at:
 
 \noindent\small\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}
@@ -140,7 +140,7 @@ If this file doesn't already exist, \href{http://apple.stackexchange.com/a/11971
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 \end{lstlisting}
 
-The command \emph{geog} replaces the commands in listings \ref{lst:logingw} and \ref{lst:loginws}, while \emph{geogport} replaces \ref{lst:tunnel1} and \ref{lst:tunnel2}.
+The command \emph{geog} replaces the commands in Listings \ref{lst:logingw} and \ref{lst:loginws}, while \emph{geogport} replaces \ref{lst:tunnel1} and \ref{lst:tunnel2}.
 You can therefore work with a remote notebook by simply entering:
 \begin{lstlisting}[caption={Set up and tunnel to remote Notebook server}, label={lst:usegfuncs}]
 # In one terminal
@@ -167,7 +167,7 @@ geogport $GPORT lima # change machine
 \section{On Windows}
 \label{sec:windows}
 
-Sections \ref{sec:wsl} and \ref{sec:putty} describe how to setup a Windows terminal emulator, into which you can enter commands adapted from section \ref{sec:linuxmac}.
+Sections \ref{sec:wsl} and \ref{sec:putty} describe how to setup a Windows terminal emulator, into which you can enter commands adapted from Section \ref{sec:linuxmac}.
 Since much of the material here refers to that section, you must read it first.
 However, I strongly urge any Windows users intending on working extensively with Python and Jupyter Notebooks to consider installing a Linux distribution\ldots
 
