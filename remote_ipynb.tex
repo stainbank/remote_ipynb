@@ -200,6 +200,11 @@ Under \emph{Source Port} supply \textless{}PORT\textgreater{} and enter 127.0.0.
 Click the \emph{Add} button to commit this information to the list of \emph{Forwarded ports}.
 Finally, to save these settings, navigate back to \emph{Sessions} and enter a \textbf{new} name under \emph{Saved Sessions} before clicking \emph{Save} (Figure \ref{fig:putty3}).
 
+To work with Jupyter Notebook on the Geography Linux Cluster, open each of these session profiles in individual PuTTY windows.
+The first session you created (\emph{arch} in Figure \ref{fig:putty1}) replaces the command in Listing \ref{lst:logingw}, while the second (\emph{archport} in \ref{fig:putty3}) replaces Listing \ref{lst:tunnel1}.
+Therefore, to remotely work with a Jupyter Notebook, simply substitute these while following the instructions in Section \ref{sec:manual}.
+
+
 \begin{figure}[p]
   \centering
     \includegraphics[width=\textwidth]{figures/putty1_save_login_session.png}
@@ -220,9 +225,5 @@ Finally, to save these settings, navigate back to \emph{Sessions} and enter a \t
   \caption{Save session to tunnel to gateway}
   \label{fig:putty3}
 \end{figure}
-\end{document}
-
-To work with Jupyter Notebook on the Geography Linux Cluster, open each of these session profiles in individual PuTTY windows.
-The first session you created (\emph{arch} in Figure \ref{fig:putty1}) replaces the command in Listing \ref{lst:logingw}, while the second (\emph{archport} in \ref{fig:putty3}) replaces Listing \ref{lst:tunnel1}. Therefore, to remotely work with a Jupyter Notebook, simply substitute these while following the instructions in Section \ref{sec:manual}.
 
 \end{document}
