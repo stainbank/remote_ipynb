@@ -2,6 +2,7 @@
 
 \usepackage{listings}
 \lstset{language=bash, frame=single}
+% \usepackage{graphicx}
 \usepackage[pdftex]{hyperref} % must go last!
 
 % Title
@@ -13,25 +14,19 @@
 \section{Introduction}
 \subsection{What is this?}
 
-The \href{http://jupyter.org/}{Jupyter Notebook}~(previously IPython Notebook)~provides a feature-rich~interactive environment for learning and using the \href{https://www.python.org/}{Python Programming language}.
+The \href{http://jupyter.org/}{Jupyter Notebook}~(previously IPython Notebook) provides a feature-rich interactive environment for learning and using \href{https://www.python.org/}{Python}.
 If you're studying for a BSc or MSc at the University College London Department of Geography then it's likely that you've encountered these Notebooks in one or more of your modules or in the preparation of a dissertation.
-Usually this will be from one of the workstations in Pearson 110a that forms part of the \href{http://www.geog.ucl.ac.uk/resources/computer-support/teaching-cluster}{Geography Linux Cluster}.
-Since physical access to Pearson 110a is not always practical, you may wish to have direct access to these files from another computer.
-This guide will show you how to \emph{remotely} run and work with Jupyter Notebooks hosted on the Linux Cluster in a manner that is fast.
+Usually you will work with them from one of the collection of workstations in Pearson 110a that forms part of the \href{http://www.geog.ucl.ac.uk/resources/computer-support/teaching-cluster}{Geography Linux Cluster}.
+Since physical access to Pearson 110a is not always practical, you may wish to have remote access to these files from another computer.
+This guide will show you how to work with Jupyter Notebooks, hosted on the Linux Cluster, from your own computer. 
 
-\subsection{Preamble on operating systems}
-
-While the machines in Pearson 110A run a~\emph{Linux} OS, it is likely that you use either \emph{Mac OS X} or \emph{Microsoft~Windows} on your own computer. The bulk of this guide is written for somebody using the terminal on a Linux computer, and Apple fans~should be able to enter all these same commands on the~\href{http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/}{Mac Terminal}. The \emph{On Windows~}section adapts these instructions for a Windows terminal emulator, although it is important to read \emph{On Linux} first.
-
-However, I strongly urge any Windows users intending on working extensively with Python and Jupyter Notebooks to consider installing a Linux distribution.
-Don't be alarmed: this need not be a drastic switch as there are two simple ways to set up Linux \emph{alongside} Windows.
-The first is to use a \emph{\href{https://www.howtogeek.com/196060/beginner-geek-how-to-create-and-use-virtual-machines/}{virtual machine}}, an OS that runs \emph{inside} your current system.
-This is very simple to setup (see \href{http://www.storagecraft.com/blog/the-dead-simple-guide-to-installing-a-linux-virtual-machine-on-windows/}{here}) and I myself use this method to work from UCL's library computers.
-The second option, and the one I use for my personal computer, is~\emph{\href{https://www.howtogeek.com/187789/dual-booting-explained-how-you-can-have-multiple-operating-systems-on-your-computer/}{dual-booting}.}~Although this is somewhat involved, a native Linux install is always faster than a virtual one and there are plenty of guides available online to guide you through the process (e.g. \href{https://itsfoss.com/guide-install-linux-mint-16-dual-boot-windows/}{1} \href{https://www.lifewire.com/ultimate-windows-7-ubuntu-linux-dual-boot-guide-2200653}{2}~\href{https://www.howtogeek.com/214571/how-to-dual-boot-linux-on-your-pc/}{3} \href{http://www.pcworld.com/article/2955460/operating-systems/dual-booting-linux-with-windows-what-you-need-to-know.html}{4}). 
-Whichever option you go for, you'll ~need to choose one from among the many \emph{\href{http://distrowatch.com/dwres.php?resource=major}{distributions}~}of Linux.
-\href{https://www.ubuntu.com/download}{Ubuntu}~and~\href{https://linuxmint.com/}{Linux Mint}~are most often suggested for beginners, and I would recommend opting for a more lightweight flavour (featuring MATE, Xfce or LXDE as the desktop environment) for use on a virtual machine or an ageing laptop.
+The bulk of this guide is written for somebody using the terminal on a Linux computer, the same OS running on the machines in Pearson 110A.
+However, it is likely that your own computer runs on either \emph{Mac OS X} (\emph{macOS}) or \emph{Microsoft Windows}.
+Since macOS is a \href{http://unix.stackexchange.com/questions/1489/is-mac-os-x-unix}{Unix-based} operating system, Apple fans should be able to enter all these same commands in section \ref{sec:linuxmac} the \href{http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/}{Mac Terminal} with little modification.
+For Windows users, on the other hand, there is a degree of set-up involved in order to get these commands to work: see section \ref{sec:windows}.
 
 \section{On Linux/ Mac OS X}
+\label{sec:linuxmac}
 \subsection{Manual}
 \label{sec:manual}
 
@@ -43,16 +38,16 @@ If you're familiar with the command-line interface then you could skip to sectio
 \subsubsection{Run Notebook Server}
 \label{sec:runnb}
 
-The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.html}{Secure Shell (SSH)}~to remotely log into one of the machines in Pearson 110a and start up a Notebook server.
+The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH}~to remotely log into one of the machines in Pearson 110a and start up a Notebook server.
 Because of the way the Linux cluster is set up, this requires a two-step (or ``multi-hop'') log in.
-To make the first hop, open a new terminal and enter the command in listing \ref{lst:logingw}, replacing \textless{}USER\textgreater{} with your UCL username and~\textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on~\href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
+To make the first hop, open a new terminal and enter the command in listing \ref{lst:logingw}, replacing \textless{}USER\textgreater{} with your UCL username and \textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
 
-\begin{lstlisting}[caption={Login to gateway}, label={lst:logingws}]
+\begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
 ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
 
-You should be prompted for your Geography network password --- note that this is not necessarily the same password that you use for other UCL services.
-After supplying it, enter the command in \ref{lst:loginws}, replacing \textless{}MACHINE\textgreater{} with the name of your favourite teaching workstation in Pearson 110a \footnote{Note that, since you're already in the network, you can omit your username and ``.geog.ucl.ac.uk'' on the second hop.}(see href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{here} for a list). 
+Enter your Geography network password \footnote{this is not necessarily the same password that you use for other UCL services.} when prompted, then enter the command in \ref{lst:loginws}.
+Here, \textless{}MACHINE\textgreater{} must be replaced by the name of your favourite teaching workstation in Pearson 110a.
 
 \begin{lstlisting}[caption={Login to workstation}, label={lst:loginws}]
 ssh <MACHINE>
@@ -71,10 +66,11 @@ Without opening the link, check that the port number (after ``http://localhost:'
 If it has changed, simply note down the new number and use it as \textless{}PORT\textgreater{} for all subsequent commands.
 
 \subsubsection{Set up SSH tunnel}
-
-Next, you're going to open a connection to the Notebook server you just created.
-In a~\textbf{new} terminal, enter the commands in listings \ref{lst:tunnel1} and \ref{lst:tunnel2}. As before, replace the bracketed values and supply your password when prompted.
-This time, the ``-L'' flags tell SSH to use \href{https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding}{local port forwarding}~so that you can transfer data between your computer and the server via an \href{http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html}{SSH tunnel}.
+\label{sec:tunnel}
+The next step is to create create an \href{http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html}{SSH tunnel}, through which you can connect to the Notebook server you just created.
+In a \textbf{new} terminal, enter the commands in listings \ref{lst:tunnel1} and \ref{lst:tunnel2}.
+Here, the ``-L'' flags tell SSH to use \href{https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding}{local port forwarding} to transfer data between nodes. 
+As before, replace the bracketed values and supply your password when prompted.
 
 \begin{lstlisting}[caption={Tunnel to gateway server}, label={lst:tunnel1}]
 ssh -L <PORT>:localhost:<PORT> -N <MACHINE>
@@ -86,10 +82,10 @@ ssh -L <PORT>:localhost:<PORT> -N <MACHINE>
 
 If all has gone well, the terminal will appear to be hanging \footnote{The optional ``-N'' flag prevents any more user input} and the SSH tunnel should be open.
 To use the Notebook, copy the link produced in section \ref{sec:runnb} (e.g.~\url{http://localhost:8888}) and paste it into the URL bar of your favourite browser. 
-Congratulations, you should now be looking at the familiar Jupyter Notebook file browser. 
+Congratulations, you should now be looking at the familiar Jupyter Notebook file browser. If not, see \ref{sec:trouble} 
 
-\subsubsection{Issues}
-
+\subsubsection{Troubleshooting}
+\label{sec:trouble}
 Occasionally, when trying to set up the SSH tunnel, you will get a message like:
 \begin{quote}
 bind: Address already in use
@@ -108,7 +104,7 @@ If this occurs, start everything over again with a different port number.
 \subsubsection{Generate SSH keys}
 \label{sec:sshkeys}
 Following all the steps in \ref{sec:manual} require you to enter your password a total of four times, once for each SSH command.
-\href{https://wiki.archlinux.org/index.php/SSH_keys}{SSH keys} provide an alternative form of authentication, using a private and a public key to allow passwordless login over SSH.
+\href{https://wiki.archlinux.org/index.php/SSH_keys}{\emph{SSH keys}} provide an alternative form of authentication, using a private and a public key to allow passwordless login over SSH.
 Two seperate pairs of keys must be set-up: one for the initial hop from your computer to the gateway node, and the other for the onward hop to the workstation.
 
 To set up the first pair of keys, open a terminal on your computer and enter the command:
@@ -127,16 +123,17 @@ To generate a pair of keys for the second hop, simply login to the any machine o
 \subsection{Geography login/tunnel functions}
 \label{sec:gfuncs}
 
-It will very quickly become tedious to perfectly type out the commands in section \href{sec:manual} every time you want to run a Notebook remotely.
-The two (\href{http://cs.lmu.edu/~ray/notes/bash/}{bash})~\href{https://www.shellscript.sh/functions.html}{functions}~in listing \ref{lst:gfuncs} can be used to condense these lines to a few short commands.
+It will very quickly become tedious to perfectly type out the commands in section \ref{sec:manual} every time you want to run a Notebook remotely.
+The two \href{https://www.shellscript.sh/functions.html}{functions}~in listing
+\ref{lst:gfuncs} written for \href{http://cs.lmu.edu/~ray/notes/bash/}{bash}, condense all of these lines to a few short commands.
 
 \lstinputlisting[float, floatplacement=hpb, caption={Functions to login/tunnel to geography cluster}, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
 
 Be aware that listing \ref{lst:gfuncs} is for demonstration only; it does not display properly in a pdf document and so will not work if used as-is.
 Instead, raw text file containing these functions can be found at:
-{}
-\noindent\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}
-{}
+
+\noindent\small\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}
+
 The simplest way to ``install'' these two functions is to paste the entire code block --- replacing the defaults as appropriate --- into a file in your home directory called \href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file.
 If this file doesn't already exist, \href{http://apple.stackexchange.com/a/119714}{as is the case on Mac OS X}, simply create it and then add the following line to the file .bash\_profile~(also in the user root directory):
 
@@ -154,7 +151,11 @@ jupyter notebook --no-browser --port=<PORT>
 geogport
 \end{lstlisting}
 
-These functions also take positional arguments, in the order \emph{geog} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{} and \emph{geogport} \textless{}PORT\textgreater{} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}.
+These functions also take positional arguments, in the order:
+
+\emph{geog} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}
+\emph{geogport} \textless{}PORT\textgreater{} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}
+
 This allows you to change any variables from their default values \footnote{You must supply all \emph{preceeding} arguments; prefix the an argument name with \textbf{\$} to use the default value}:
 
 \begin{lstlisting}[caption={Examples of arguments to geography login/tunnel functions}, label={lst:gfuncsargseg}]
@@ -163,5 +164,36 @@ geog $MACHINE triangle ucfaxyz # change user and gateway
 geogport 8889 # change port
 geogport $GPORT lima # change machine
 \end{lstlisting}
+
+\section{On Windows}
+\label{sec:windows}
+
+Sections \ref{sec:wsl} and \ref{sec:putty} describe how to setup a Windows terminal emulator, into which you can enter commands adapted from section \ref{sec:linuxmac}.
+Since much of the material here refers to that section, you must read it first.
+However, I strongly urge any Windows users intending on working extensively with Python and Jupyter Notebooks to consider installing a Linux distribution\ldots
+
+\subsection{Install Linux}
+\label{sec:win2lnx}
+Don't be alarmed: this need not be a drastic switch as there are two simple ways to set up Linux \emph{alongside} Windows.
+The first is to use a \emph{\href{https://www.howtogeek.com/196060/beginner-geek-how-to-create-and-use-virtual-machines/}{virtual machine}}, an OS that runs \emph{inside} your current system.
+This is very simple to setup (see \href{http://www.storagecraft.com/blog/the-dead-simple-guide-to-installing-a-linux-virtual-machine-on-windows/}{here}) and I myself use this method to work from UCL's library computers.
+
+The second option, and the one I use for my personal computer, is \emph{\href{https://www.howtogeek.com/187789/dual-booting-explained-how-you-can-have-multiple-operating-systems-on-your-computer/}{dual-booting}}.
+Although this imay seem somewhat involved, a native Linux install is always faster than a virtual one and there are plenty of guides available online to guide you through the process (e.g.\href{https://itsfoss.com/guide-install-linux-mint-16-dual-boot-windows/}{1}, \href{https://www.lifewire.com/ultimate-windows-7-ubuntu-linux-dual-boot-guide-2200653}{2}, \href{https://www.howtogeek.com/214571/how-to-dual-boot-linux-on-your-pc/}{3}, \href{http://www.pcworld.com/article/2955460/operating-systems/dual-booting-linux-with-windows-what-you-need-to-know.html}{4}). 
+
+Whichever installation option you go for, you will need to choose one from among the many \emph{\href{http://distrowatch.com/dwres.php?resource=major}{distributions}} of Linux, with \href{https://www.ubuntu.com/download}{Ubuntu}~and \href{https://linuxmint.com/}{Linux Mint} most often suggested for beginners. For use on a virtual machine or an ageing laptop, I would recommend opting for a more lightweight flavour --- i.e. on that features MATE, Xfce or LXDE as it's desktop environment.
+
+\subsection{Windows Subsystem for Linux}
+\label{sec:wsl}
+If you have Windows 10 then you'll be able to take advantage of a new Microsoft development called \emph{Windows Subsystem for Linux} (WSL), otherwise referred to as \emph{Bash on Ubuntu on Linux}, which provides a Linux command-line interface on Windows.
+To use WSL to run Jupyter Notebooks, simply \href{https://msdn.microsoft.com/en-gb/commandline/wsl/install_guide}{install the feature} then follow the instructions above for Linux.
+
+\subsection{PuTTY}
+\label{sec:putty}
+
+If you don't have access to WSL then you'll have to use the popular terminal emulator and SSH client \emph{PuTTY~}to access your Notebooks. 
+First install the program from \href{http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html}{its website}, then run a PuTTY instance to load its GUI configuration screen. 
+Navigate to the ``Session'' and enter \textless{}USER\textgreater{}@\textless{}GATEWAY\textgreater{}.geog.ucl.ac.uk in the ``Host Name'' box, making the appropriate replacements as described in \ref{sec:linuxmac}. Follow \href{http://www.geo.mtu.edu/geoschem/docs/putty_install.html}{this guide} if you want to be able to load X11 windows (i.e. graphical programs such as~\emph{gedit}~or~\emph{Firefox}), although this is not necessary for using Notebooks.
+To store these gateway login settings, enter a name under \emph{Saved Sessions} and click \emph{Save}.
 
 \end{document}
