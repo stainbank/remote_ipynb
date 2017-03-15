@@ -47,8 +47,15 @@ The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.h
 Because of the way the Linux cluster is set up, this requires a two-step (or ``multi-hop'') log in.
 To make the first hop, open a new terminal and enter the command in listing \ref{lst:logingw}, replacing \textless{}USER\textgreater{} with your UCL username and~\textless{}GATEWAY\textgreater{} with the name of any one of the gateway servers listed on~\href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
 
-\begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
+\begin{lstlisting}[caption={Login to gateway}, label={lst:logingws}]
 ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
+\end{lstlisting}
+
+You should be prompted for your Geography network password --- note that this is not necessarily the same password that you use for other UCL services.
+After supplying it, enter the command in \ref{lst:loginws}, replacing \textless{}MACHINE\textgreater{} with the name of your favourite teaching workstation in Pearson 110a \footnote{Note that, since you're already in the network, you can omit your username and ``.geog.ucl.ac.uk'' on the second hop.}(see href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{here} for a list). 
+
+\begin{lstlisting}[caption={Login to workstation}, label={lst:loginws}]
+ssh <MACHINE>
 \end{lstlisting}
 
 After entering your password again, start running the Notebook server with command \ref{lst:runnb}.
@@ -128,18 +135,16 @@ The two (\href{http://cs.lmu.edu/~ray/notes/bash/}{bash})~\href{https://www.shel
 Be aware that listing \ref{lst:gfuncs} is for demonstration only; it does not display properly in a pdf document and so will not work if used as-is.
 Instead, raw text file containing these functions can be found at:
 {}
-
 \noindent\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}
 {}
-
-The simplest way to ``install'' these two functions is to paste the entire code block --- replacing the defaults as appropriate --- into a file in your home directorycalled \href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file.
+The simplest way to ``install'' these two functions is to paste the entire code block --- replacing the defaults as appropriate --- into a file in your home directory called \href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file.
 If this file doesn't already exist, \href{http://apple.stackexchange.com/a/119714}{as is the case on Mac OS X}, simply create it and then add the following line to the file .bash\_profile~(also in the user root directory):
 
 \begin{lstlisting}[caption={Source .bashrc on startup}, label={lst:srcbashrc}]
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 \end{lstlisting}
 
-The command \emph{geog} replaces the commands in listings \ref{lst:logingw} and \ref{lst:loginmach}, while \emph{geogport} replaces \ref{lst:tunnel1} and \ref{lst:tunnel2}.
+The command \emph{geog} replaces the commands in listings \ref{lst:logingw} and \ref{lst:loginws}, while \emph{geogport} replaces \ref{lst:tunnel1} and \ref{lst:tunnel2}.
 You can therefore work with a remote notebook by simply entering:
 \begin{lstlisting}[caption={Set up and tunnel to remote Notebook server}, label={lst:usegfuncs}]
 # In one terminal
