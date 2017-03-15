@@ -2,10 +2,9 @@
 
 \usepackage{listings}
 \lstset{language=bash, frame=single}
-% \usepackage{graphicx}
+\usepackage{graphicx}
 \usepackage[pdftex]{hyperref} % must go last!
 
-% Title
 \title{Remotely work with Jupyter(IPython) notebooks on the UCL Geography Linux cluster}
 \author{Chad Stainbank}
 
@@ -179,7 +178,7 @@ The first is to use a \emph{\href{https://www.howtogeek.com/196060/beginner-geek
 This is very simple to setup (see \href{http://www.storagecraft.com/blog/the-dead-simple-guide-to-installing-a-linux-virtual-machine-on-windows/}{here}) and I myself use this method to work from UCL's library computers.
 
 The second option, and the one I use for my personal computer, is \emph{\href{https://www.howtogeek.com/187789/dual-booting-explained-how-you-can-have-multiple-operating-systems-on-your-computer/}{dual-booting}}.
-Although this imay seem somewhat involved, a native Linux install is always faster than a virtual one and there are plenty of guides available online to guide you through the process (e.g.\href{https://itsfoss.com/guide-install-linux-mint-16-dual-boot-windows/}{1}, \href{https://www.lifewire.com/ultimate-windows-7-ubuntu-linux-dual-boot-guide-2200653}{2}, \href{https://www.howtogeek.com/214571/how-to-dual-boot-linux-on-your-pc/}{3}, \href{http://www.pcworld.com/article/2955460/operating-systems/dual-booting-linux-with-windows-what-you-need-to-know.html}{4}). 
+Although this imay seem somewhat involved, a native Linux install is always faster than a virtual one and there are plenty of guides available online to guide you through the process (e.g.\href{https://itsfoss.com/guide-install-linux-mint-16-dual-boot-windows/}{1}, \href{https://www.lifewire.com/ultimate-windows-7-ubuntu-linux-dual-boot-guide-2200.53}{2}, \href{https://www.howtogeek.com/214571/how-to-dual-boot-linux-on-your-pc/}{3}, \href{http://www.pcworld.com/article/2955460/operating-systems/dual-booting-linux-with-windows-what-you-need-to-know.html}{4}). 
 
 Whichever installation option you go for, you will need to choose one from among the many \emph{\href{http://distrowatch.com/dwres.php?resource=major}{distributions}} of Linux, with \href{https://www.ubuntu.com/download}{Ubuntu}~and \href{https://linuxmint.com/}{Linux Mint} most often suggested for beginners. For use on a virtual machine or an ageing laptop, I would recommend opting for a more lightweight flavour --- i.e. on that features MATE, Xfce or LXDE as it's desktop environment.
 
@@ -191,9 +190,39 @@ To use WSL to run Jupyter Notebooks, simply \href{https://msdn.microsoft.com/en-
 \subsection{PuTTY}
 \label{sec:putty}
 
-If you don't have access to WSL then you'll have to use the popular terminal emulator and SSH client \emph{PuTTY~}to access your Notebooks. 
-First install the program from \href{http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html}{its website}, then run a PuTTY instance to load its GUI configuration screen. 
-Navigate to the ``Session'' and enter \textless{}USER\textgreater{}@\textless{}GATEWAY\textgreater{}.geog.ucl.ac.uk in the ``Host Name'' box, making the appropriate replacements as described in \ref{sec:linuxmac}. Follow \href{http://www.geo.mtu.edu/geoschem/docs/putty_install.html}{this guide} if you want to be able to load X11 windows (i.e. graphical programs such as~\emph{gedit}~or~\emph{Firefox}), although this is not necessary for using Notebooks.
-To store these gateway login settings, enter a name under \emph{Saved Sessions} and click \emph{Save}.
+If you don't have access to WSL then you'll have to use the popular terminal emulator and SSH client \emph{PuTTY} to access your Notebooks. 
+First install the program from its \href{http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html}{website}, then run a PuTTY instance to load its GUI configuration screen. 
+Navigate to the \emph{Session} screen and enter \textless{}USER\textgreater{}@\textless{}GATEWAY\textgreater{}.geog.ucl.ac.uk in the \emph{Host Name} box, making the appropriate replacements (described in Section \ref{sec:linuxmac}).
+\footnote{Follow \href{http://www.geo.mtu.edu/geoschem/docs/putty_install.html}{this guide} if you want to be able to load X11 windows (i.e. graphical programs such as~\emph{gedit}~or~\emph{Firefox}), although this is not necessary for using Notebooks.}
+To store these gateway login settings, enter a name under \emph{Saved Sessions} and click \emph{Save} (Figure \ref{fig:putty1}).
+To set up the SSH tunnel, ensure that the settings from the previous session are loaded, then navigate to the port forwarding options via \emph{Connection} \textgreater{} \emph{SSH} \textgreater{} \emph{Auth} \textgreater{} \emph{Tunnels} (Figure \ref{fig:putty2}). 
+Under \emph{Source Port} supply \textless{}PORT\textgreater{} and enter 127.0.0.1:\textless{}PORT\textgreater{} as the \emph{Destination}, substituting \textless{}PORT\textgreater{} with a valid port number as described in Section \ref{sec:runnb}.
+Click the \emph{Add} button to commit this information to the list of \emph{Forwarded ports}.
+Finally, to save these settings, navigate back to \emph{Sessions} and enter a \textbf{new} name under \emph{Saved Sessions} before clicking \emph{Save} (Figure \ref{fig:putty3}).
+
+\begin{figure}[p]
+  \centering
+    \includegraphics[width=\textwidth]{figures/putty1_save_login_session.png}
+  \caption{Save session to login to gateway}
+  \label{fig:putty1}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+    \includegraphics[width=\textwidth]{figures/putty2_setup_tunnel.png}
+  \caption{Set up port forwarding to gateway}
+  \label{fig:putty2}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+    \includegraphics[width=\textwidth]{figures/putty3_save_tunnel_session.png}
+  \caption{Save session to tunnel to gateway}
+  \label{fig:putty3}
+\end{figure}
+\end{document}
+
+To work with Jupyter Notebook on the Geography Linux Cluster, open each of these session profiles in individual PuTTY windows.
+The first session you created (\emph{arch} in Figure \ref{fig:putty1}) replaces the command in Listing \ref{lst:logingw}, while the second (\emph{archport} in \ref{fig:putty3}) replaces Listing \ref{lst:tunnel1}. Therefore, to remotely work with a Jupyter Notebook, simply substitute these while following the instructions in Section \ref{sec:manual}.
 
 \end{document}
