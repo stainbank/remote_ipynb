@@ -214,7 +214,7 @@ Navigate to the \emph{Session} screen and enter \texttt{\textless{}USER\textgrea
 \footnote{Follow \href{http://www.geo.mtu.edu/geoschem/docs/putty_install.html}{this guide} if you want to be able to load X11 windows (i.e. graphical programs such as \emph{gedit} or \emph{Firefox}), although this is not necessary for using Notebooks.}
 To store these gateway login settings, enter a name under \emph{Saved Sessions} and click \emph{Save} (Figure \ref{fig:putty1}).
 To set up the SSH tunnel, ensure that the settings from the previous session are loaded, then navigate to the port forwarding options via \emph{Connection} \textgreater{} \emph{SSH} \textgreater{} \emph{Tunnels} (Figure \ref{fig:putty2}). 
-Under \emph{Source Port} supply \textless{}PORT\textgreater{} as the \emph{Destination} type 127.0.0.1:\textless{}PORT\textgreater{}, substituting \textless{}PORT\textgreater{} with a valid port number as described in Section \ref{sec:runnb}.
+Under \emph{Source Port} supply \texttt{\textless{}PORT\textgreater{}}, and as the \emph{Destination} type \texttt{127.0.0.1:\textless{}PORT\textgreater{}}, substituting \textless{}PORT\textgreater{} with a valid port number as described in Section \ref{sec:runnb}.
 Click the \emph{Add} button to commit this information to the list of \emph{Forwarded ports}.
 Finally, to save these settings, navigate back to \emph{Sessions} and enter a \textbf{new} name under \emph{Saved Sessions} before clicking \emph{Save} (Figure \ref{fig:putty3}).
 
