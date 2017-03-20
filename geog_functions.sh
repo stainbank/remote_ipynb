@@ -1,9 +1,9 @@
 #! /bin/bash
 # Replace these defaults
-GUSER=ucfacms
-GATEWAY=arch
-MACHINE=freetown
-GPORT=9000
+GUSER=ucaaxyz
+GATEWAY=shape
+MACHINE=city
+GPORT=number
 # Log in UCL Geography Linux cluster machine
 geog () {
     ssh -t -Y ${3:-$GUSER}@${2:-$GATEWAY}.geog.ucl.ac.uk ssh -Y ${1:-$MACHINE}
