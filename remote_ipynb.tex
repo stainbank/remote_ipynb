@@ -141,9 +141,7 @@ To generate a pair of keys for the second hop, simply login to the any machine o
 \label{sec:gfuncs}
 
 It will very quickly become tedious to perfectly type out the commands in Section \ref{sec:manual} every time you want to run a Notebook remotely.
-The two \href{https://www.shellscript.sh/functions.html}{functions} in listing \ref{lst:gfuncs}, written for \href{http://cs.lmu.edu/~ray/notes/bash/}{\emph{bash}}, condense most of this to a few short commands.
-
-\lstinputlisting[float, floatplacement=hpb, caption={Functions to login/tunnel to geography cluster}, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
+The two \href{https://www.shellscript.sh/functions.html}{functions} in Listing \ref{lst:gfuncs} (at the end of this document), written for \href{http://cs.lmu.edu/~ray/notes/bash/}{\emph{bash}}, condense most of this to a few short commands.
 
 Be aware that Listing \ref{lst:gfuncs} is for demonstration only; it does not display properly in a pdf document and so will not work if used as-is.
 Instead, raw text file containing these functions can be found at:
@@ -262,5 +260,8 @@ Could not request local forwarding
 This means that the tunnel could not be established as another process is using that particular port.
 If this occurs, start everything over again with a different port number.
 
+\newpage
+
+\lstinputlisting[float, floatplacement=p!, caption={Functions to login/tunnel to geography cluster}, label={lst:gfuncs}, firstline=2, lastline=21, breaklines=true]{geog_functions.sh}
 
 \end{document}
