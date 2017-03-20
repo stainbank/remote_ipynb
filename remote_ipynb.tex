@@ -112,20 +112,6 @@ To use the Notebook, simply open the link from the first terminal (Section \ref{
 Congratulations: you should now be looking at the familiar Jupyter Notebook file browser and you can now move on to Section \ref{sec:auto} to make this whole process easier.
 Otherwise, if something has gone wrong, see \ref{sec:trouble} 
 
-\subsubsection{Troubleshooting}
-\label{sec:trouble}
-Occasionally, when trying to set up the SSH tunnel, you will get a message like:
-\begin{quote}
-bind: Address already in use
-
-channel\emph{setup}fwd\_listener: cannot listen to port: \textless{}PORT\textgreater{}
-
-Could not request local forwarding
-\end{quote}
-
-This means that the tunnel could not be established as another process is using that particular port.
-If this occurs, start everything over again with a different port number.
-
 \subsection{Automatic}
 \label{sec:auto}
 
@@ -255,5 +241,20 @@ Therefore, to remotely work with a Jupyter Notebook, simply substitute these whi
   \caption{Save session to tunnel to gateway}
   \label{fig:putty3}
 \end{figure}
+
+\section{Troubleshooting}
+\label{sec:trouble}
+Occasionally, when trying to set up the SSH tunnel, you will get a message like:
+\begin{quote}
+bind: Address already in use
+
+channel\emph{setup}fwd\_listener: cannot listen to port: \textless{}PORT\textgreater{}
+
+Could not request local forwarding
+\end{quote}
+
+This means that the tunnel could not be established as another process is using that particular port.
+If this occurs, start everything over again with a different port number.
+
 
 \end{document}
