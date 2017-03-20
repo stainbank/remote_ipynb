@@ -23,15 +23,30 @@ However, it is likely that your own computer runs on either Mac OS X (macOS) or 
 Since macOS is a \href{http://unix.stackexchange.com/questions/1489/is-mac-os-x-unix}{Unix-based} operating system, Apple fans should be able to enter all the commands in Section \ref{sec:linuxmac} into the \href{http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/}{Mac Terminal} with little modification.
 Windows users, on the other hand, must first set up a terminal emulator before following these instructions, as explained in Section \ref{sec:windows}.
 
+
+
 \section{On Linux/ Mac OS X}
 \label{sec:linuxmac}
+Section \ref{sec:manual} provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
+This boils down to three simple steps:
+\begin{enumerate}
+\item Log in to geography machine
+\item Run remote Notebook server
+\item Open tunnel to Notebook server
+\item Open Notebook server in local browser
+\end{enumerate}
+If you're familiar with the command-line interface then you could skip to Section \ref{sec:auto}, where these commands are condensed to shell functions, although it's worth going through this once to ensure that everything is working smoothly.
+
 \subsection{Manual}
 \label{sec:manual}
 
-This section provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
-The Listings boxes display commands to be entered into the terminal. \textbf{\textless{}\textgreater{}} enclose values which must be replaced as specified, while comments --- any text after \textbf{\#} --- do not need to be entered.
-These commands may not render properly in pdf so be careful to distinguish between the single dash (\textbf{-}) and the double dash (\textbf{-{}-}).
-If you're familiar with the command-line interface then you could skip to Section \ref{sec:auto}, where these commands are condensed to shell functions, although it's worth going through this once to ensure that everything is working smoothly.
+The \emph{Listings} boxes, such Listing \ref{lst:example} below, display lines of commands to be entered into the terminal.
+If a command contains text enclosed in angle brackets (\textbf{\textless{}\textgreater{}}) then you must replace the variable (including the brackets) as specified.
+Any text following the \textbf{\#} character is a comment and does not need to be entered.
+Many commands take option flags --- be careful to distinguish between the single dash (\textbf{-}) and the double dash (\textbf{-{}-}).
+\begin{lstlisting}[caption={An example of a command}, label={lst:example}]
+command -f --flag <variable> # this does something
+\end{lstlisting}
 
 \subsubsection{Run Notebook Server}
 \label{sec:runnb}
