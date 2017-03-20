@@ -1,7 +1,8 @@
 \documentclass[a4paper]{article}
 
 \usepackage{listings}
-\lstset{language=bash, frame=single, basicstyle=\ttfamily}
+\renewcommand*\ttdefault{pcr} % use courier for mono text
+\lstset{language=bash, frame=single, basicstyle=\ttfamily\small}
 \usepackage{graphicx}
 \usepackage[pdftex]{hyperref} % must go last!
 
@@ -28,45 +29,51 @@ Windows users, on the other hand, must first set up a terminal emulator before f
 \section{On Linux/ Mac OS X}
 \label{sec:linuxmac}
 Section \ref{sec:manual} provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
-This boils down to three simple steps:
-\begin{enumerate}
-\item Log in to geography machine
-\item Run remote Notebook server
-\item Open tunnel to Notebook server
-\item Open Notebook server in local browser
-\end{enumerate}
 If you're familiar with the command-line interface then you could skip to Section \ref{sec:auto}, where these commands are condensed to shell functions, although it's worth going through this once to ensure that everything is working smoothly.
 
 \subsection{Manual}
 \label{sec:manual}
 
-The \emph{Listings} boxes, such Listing \ref{lst:example} below, display lines of commands to be entered into the terminal.
+The \emph{Listing} boxes, such Listing \ref{lst:example} below, display lines of commands to be entered into the terminal.
 If a command contains text enclosed in angle brackets (\textbf{\textless{}\textgreater{}}) then you must replace the variable (including the brackets) as specified.
 Any text following the \textbf{\#} character is a comment and does not need to be entered.
-Many commands take option flags --- be careful to distinguish between the single dash (\textbf{-}) and the double dash (\textbf{-{}-}).
+Many commands take \emph{flags} to specify some of their behaviour --- be careful to distinguish between the single dash (\textbf{-}) and the double dash (\textbf{-{}-}) when typing these out.
 \begin{lstlisting}[caption={An example of a command}, label={lst:example}]
-command -f --flag <variable> # this does something
+cmnd --flag <variable> # this does something
 \end{lstlisting}
 
-\subsubsection{Run Notebook Server}
-\label{sec:runnb}
-
-The first step is use the program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH}~to remotely log into one of the machines in Pearson 110a and start up a Notebook server.
-Because of the way the Linux cluster is set up, this requires a two-step (or \emph{multi-hop}) login.
-To make the first hop, open a new terminal and enter the command in Listing \ref{lst:logingw}, replacing \texttt{\textless{}USER\textgreater{}} with your UCL username and \texttt{\textless{}GATEWAY\textgreater{}} with the name of any one of the gateway servers listed on \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}.
+\subsubsection{Log in to cluster machine}
+\label{sec:login}
+The program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH} allows you to log into one of the machines in Pearson 110a from your own computer.
+The Linux cluster is set up in a way that requires a two-step (or \emph{multi-hop}) remote login, meaning that you must first pass through a \emph{gateway server}. 
+To make the first hop, open a terminal window and enter the command in Listing \ref{lst:logingw}, replacing \texttt{\textless{}USER\textgreater{}} with your UCL username and \texttt{\textless{}GATEWAY\textgreater{}} with the name of any one of the gateway servers (a list of addressess can be found on the \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}).
 
 \begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
 ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
 
-Enter your Geography network password \footnote{this is not necessarily the same password that you use for other UCL services.} when prompted, followed by the command in \ref{lst:loginws}.
-Here, \texttt{\textless{}MACHINE\textgreater{}} must be replaced by the name of your favourite teaching workstation in Pearson 110a.
+The first time you log in to a given machine, you will get the following message:
+
+\begin{quote}
+The authenticity of host 'quito (128.40.214.37)' can't be established.
+RSA key fingerprint is \ldots{} 
+Are you sure you want to continue connecting (yes/no)?
+\end{quote}
+
+Type ``yes'' to confirm, then enter your Geography network password \footnote{this is not necessarily the same password that you use for other UCL services.} when prompted to log in to the gateway server.
+
+To make the second hop, enter the command in Listing \ref{lst:loginws}, replacing \texttt{\textless{}MACHINE\textgreater{}} with the name of your favourite teaching workstation in Pearson 110a. Notice that, as you are already within the geography network, you don't have to specify \texttt{\textless{}USER\textgreater{}} or finish the address with ``.geog.ucl.ac.uk'' this time.
 
 \begin{lstlisting}[caption={Login to workstation}, label={lst:loginws}]
 ssh <MACHINE>
 \end{lstlisting}
 
-After entering your password again, start running the Notebook server with command \ref{lst:runnb}.
+Simply enter your password again to complete the login to your chosen cluster machine.
+
+\subsubsection{Run remote Notebook Server}
+\label{sec:runnb}
+
+Start running a remote Notebook server with the command in Listing \ref{lst:runnb}.
 The flag ``--no-browser'' prevents Firefox from opening automatically, while ``--port'' tells the server to listen on a particular port number.
 This is 8888 by default, although you can choose just about any integer above 1026 to replace \texttt{\textless{}PORT\textgreater{}}.
 
@@ -74,28 +81,36 @@ This is 8888 by default, although you can choose just about any integer above 10
 jupyter notebook --no-browser --port=<PORT>
 \end{lstlisting}
 
-Jupyter should now inform you that ``The IPython Notebook is running at: \textless{}link\textgreater{}''.
-Without opening the link, check that the port number (after ``http://localhost:'') is the same the one you specified.
+Jupyter should now inform you that:
+\begin{quote}
+The IPython Notebook is running at: http://localhost:\textless{}port number\textgreater{}''.
+\end{quote}
+Look carefully at the link and check that the port number is the same the one you specified.
 If it has changed, simply note down the new number and use it as \texttt{\textless{}PORT\textgreater{}} for all subsequent commands.
 
 \subsubsection{Set up SSH tunnel}
 \label{sec:tunnel}
-The next step is to open an \href{http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html}{SSH tunnel}, through which you can connect to the freshly created Notebook server.
-In a \textbf{new} terminal, enter the commands in Listings \ref{lst:tunnel1} and \ref{lst:tunnel2}.
-Here, the ``-L'' flags tell SSH to use \href{https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding}{local port forwarding} to transfer data between nodes. 
-As before, replace the bracketed values and supply your password when prompted.
+The next step is to open an \href{http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html}{SSH tunnel} with the workstation in Section \ref{sec:login}, allowing you to connect to the Notebook server created in Section \ref{sec:runnb}.
+This is achieved by passing the ``-L'' flag to tell SSH to use \href{https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding}{local port forwarding} to transfer data between nodes. 
+In a \emph{new} terminal, enter the commands in Listings \ref{lst:tunnel1} and \ref{lst:tunnel2}, replacing variables and supplying passwords as before.
 
 \begin{lstlisting}[caption={Tunnel to gateway server}, label={lst:tunnel1}]
-ssh -L <PORT>:localhost:<PORT> -N <MACHINE>
+ssh -L <PORT>:localhost:<PORT> <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Tunnel to machine}, label={lst:tunnel2}]
-ssh -L <PORT>:localhost:<PORT> -N <MACHINE>
+\begin{lstlisting}[caption={Tunnel to cluster machine}, label={lst:tunnel2}]
+ssh -L <PORT>:localhost:<PORT> -N <MACHINE> # this will hang
 \end{lstlisting}
 
-If all has gone well, the terminal will appear to be hanging \footnote{The optional ``-N'' flag prevents any more user input} and the SSH tunnel should be open.
-To use the Notebook, copy the link produced in Section \ref{sec:runnb} (e.g. \url{http://localhost:8888}) and paste it into the URL bar of your favourite browser. 
-Congratulations, you should now be looking at the familiar Jupyter Notebook file browser. If not, see \ref{sec:trouble} 
+If all has gone well then the terminal will appear to be hanging, as the optional ``-N'' flag prevents any more user input.
+This means that the SSH tunnel is now open for business.
+
+\subsubsection{Open Notebook in browser}
+\label{sec:opennb}
+
+To use the Notebook, simply open the link from the first terminal (Section \ref{sec:runnb}) using a browser on your local computer. 
+Congratulations: you should now be looking at the familiar Jupyter Notebook file browser and you can now move on to Section \ref{sec:auto} to make this whole process easier.
+Otherwise, if something has gone wrong, see \ref{sec:trouble} 
 
 \subsubsection{Troubleshooting}
 \label{sec:trouble}
@@ -131,7 +146,6 @@ ssh-copy-id <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
 
 To generate a pair of keys for the second hop, simply login to the any machine on the linux cluster and repeat the process.
-\footnote{You do not need to specify \texttt{\textless{}USER\textgreater{},} nor finish the address with ``.geog.ucl.ac.uk'', as you are already within the geography network.}
 
 \subsection{Geography login/tunnel functions}
 \label{sec:gfuncs}
