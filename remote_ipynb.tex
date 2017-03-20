@@ -6,6 +6,8 @@
 \usepackage{graphicx}
 \usepackage[pdftex]{hyperref} % must go last!
 
+\newenvironment{ttt}{\ttfamily}{\par} % for quoting terminal output
+
 \title{Remotely work with Jupyter (IPython) Notebooks at UCL Geography}
 \author{Chad Stainbank}
 
@@ -20,11 +22,9 @@ Since physical access to Pearson 110a is not always practical, you may wish to h
 This guide will show you how to work with Notebooks, hosted on the Linux Cluster, from your own computer. 
 
 The bulk of this guide is written for somebody using the terminal on a Linux computer.
-However, it is likely that your own computer runs on either Mac OS X (macOS) or Microsoft Windows.
+However, it is likely that your own computer runs on either macOS or Microsoft Windows.
 Since macOS is a \href{http://unix.stackexchange.com/questions/1489/is-mac-os-x-unix}{Unix-based} operating system, Apple fans should be able to enter all the commands in Section \ref{sec:linuxmac} into the \href{http://www.macworld.co.uk/feature/mac-software/get-more-out-of-os-x-terminal-3608274/}{Mac Terminal} with little modification.
 Windows users, on the other hand, must first set up a terminal emulator before following these instructions, as explained in Section \ref{sec:windows}.
-
-
 
 \section{On Linux/ Mac OS X}
 \label{sec:linuxmac}
@@ -46,7 +46,7 @@ cmnd --flag <variable> # this does something
 \label{sec:login}
 The program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH} allows you to log into one of the machines in Pearson 110a from your own computer.
 The Linux cluster is set up in a way that requires a two-step (or \emph{multi-hop}) remote login, meaning that you must first pass through a \emph{gateway server}. 
-To make the first hop, open a terminal window and enter the command in Listing \ref{lst:logingw}, replacing \texttt{\textless{}USER\textgreater{}} with your UCL username and \texttt{\textless{}GATEWAY\textgreater{}} with the name of any one of the gateway servers (a list of addressess can be found on the \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}).
+To make the first hop, open a terminal window and enter the command in Listing \ref{lst:logingw}, replacing \texttt{\textless{}USER\textgreater{}} with your UCL username and \texttt{\textless{}GATEWAY\textgreater{}} with the name of any one of the gateway servers (a list of their addressess can be found on the \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}).
 
 \begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
 ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
@@ -55,14 +55,18 @@ ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
 The first time you log in to a given machine, you will get the following message:
 
 \begin{quote}
-The authenticity of host 'quito (128.40.214.37)' can't be established.
-RSA key fingerprint is \ldots{} 
+\begin{ttt}
+The authenticity of host '\textless{}GATEWAY\textgreater{} (\ldots)' can't be established.
+
+RSA key fingerprint is \ldots{}
+
 Are you sure you want to continue connecting (yes/no)?
+\end{ttt}
 \end{quote}
 
-Type ``yes'' to confirm, then enter your Geography network password \footnote{this is not necessarily the same password that you use for other UCL services.} when prompted to log in to the gateway server.
+Type \texttt{yes} to confirm, then enter your Geography cluster password \footnote{this is not necessarily the same password that you use for other UCL services.} when prompted to log in to the gateway server.
 
-To make the second hop, enter the command in Listing \ref{lst:loginws}, replacing \texttt{\textless{}MACHINE\textgreater{}} with the name of your favourite teaching workstation in Pearson 110a. Notice that, as you are already within the geography network, you don't have to specify \texttt{\textless{}USER\textgreater{}} or finish the address with ``.geog.ucl.ac.uk'' this time.
+To make the second hop, enter the command in Listing \ref{lst:loginws}, replacing \texttt{\textless{}MACHINE\textgreater{}} with the name of your favourite teaching workstation in Pearson 110a. Notice that, as you are already within the geography network, you don't have to specify \texttt{\textless{}USER\textgreater{}} or finish the address with \texttt{.geog.ucl.ac.uk} this time.
 
 \begin{lstlisting}[caption={Login to workstation}, label={lst:loginws}]
 ssh <MACHINE>
@@ -74,7 +78,7 @@ Simply enter your password again to complete the login to your chosen cluster ma
 \label{sec:runnb}
 
 Start running a remote Notebook server with the command in Listing \ref{lst:runnb}.
-The flag ``--no-browser'' prevents Firefox from opening automatically, while ``--port'' tells the server to listen on a particular port number.
+The flag \texttt{--no-browser} prevents Firefox from opening automatically, while \texttt{--port} tells the server to listen on a particular port number.
 This is 8888 by default, although you can choose just about any integer above 1026 to replace \texttt{\textless{}PORT\textgreater{}}.
 
 \begin{lstlisting}[caption={Run Notebook server}, label={lst:runnb}]
@@ -83,15 +87,15 @@ jupyter notebook --no-browser --port=<PORT>
 
 Jupyter should now inform you that:
 \begin{quote}
-The IPython Notebook is running at: http://localhost:\textless{}port number\textgreater{}''.
+\texttt{The IPython Notebook is running at: http://localhost:\textless{}PORT\textgreater{}.}
 \end{quote}
 Look carefully at the link and check that the port number is the same the one you specified.
 If it has changed, simply note down the new number and use it as \texttt{\textless{}PORT\textgreater{}} for all subsequent commands.
 
 \subsubsection{Set up SSH tunnel}
 \label{sec:tunnel}
-The next step is to open an \href{http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html}{SSH tunnel} with the workstation in Section \ref{sec:login}, allowing you to connect to the Notebook server created in Section \ref{sec:runnb}.
-This is achieved by passing the ``-L'' flag to tell SSH to use \href{https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding}{local port forwarding} to transfer data between nodes. 
+The next step is to open an \href{http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html}{\emph{SSH tunnel}} with the workstation in Section \ref{sec:login}, allowing you to connect to the Notebook server created in Section \ref{sec:runnb}.
+This is achieved by passing the \texttt{-L} flag, which tells SSH to use \href{https://help.ubuntu.com/community/SSH/OpenSSH/PortForwarding}{local port forwarding} to transfer data between nodes. 
 In a \emph{new} terminal, enter the commands in Listings \ref{lst:tunnel1} and \ref{lst:tunnel2}, replacing variables and supplying passwords as before.
 
 \begin{lstlisting}[caption={Tunnel to gateway server}, label={lst:tunnel1}]
@@ -102,7 +106,7 @@ ssh -L <PORT>:localhost:<PORT> <USER>@<GATEWAY>.geog.ucl.ac.uk
 ssh -L <PORT>:localhost:<PORT> -N <MACHINE> # this will hang
 \end{lstlisting}
 
-If all has gone well then the terminal will appear to be hanging, as the optional ``-N'' flag prevents any more user input.
+If all has gone well then the terminal will appear to be hanging, as the optional \texttt{-N} flag prevents any more user input.
 This means that the SSH tunnel is now open for business.
 
 \subsubsection{Open Notebook in browser}
@@ -117,7 +121,7 @@ Otherwise, if something has gone wrong, see \ref{sec:trouble}
 
 \subsubsection{Generate SSH keys}
 \label{sec:sshkeys}
-Following all the steps in \ref{sec:manual} requires you to enter your password a total of four times, once for each SSH command.
+Following all the steps in \ref{sec:manual} requires you to enter your password a total of four times (once for each SSH command).
 \href{https://wiki.archlinux.org/index.php/SSH_keys}{\emph{SSH keys}} provide an alternative form of authentication, using a private and a public key to allow passwordless login over SSH.
 Two seperate pairs of keys must be set-up: one for the initial hop from your computer to the gateway node and another for the onward hop to the workstation.
 
@@ -125,13 +129,13 @@ To set up the first pair of keys, open a terminal on your computer and enter the
 \begin{lstlisting}[caption={Generate SSH keys}, label={lst:genkeys}]
 ssh-keygen -t rsa
 \end{lstlisting}
-Let the program use the default file with no passphrase by presssing enter twice, then copy the public key to the geography file network using command \ref{lst:cpkeys} and following the instructions returned by the program.
+Let the program use the default file with no passphrase by presssing \emph{Enter} three times, then copy the public key to the geography file network using Listing \ref{lst:cpkeys} and following the instructions returned by the program.
 
 \begin{lstlisting}[caption={Copy public key to geography file system}, label={lst:cpkeys}]
 ssh-copy-id <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
 
-To generate a pair of keys for the second hop, simply login to the any machine on the linux cluster and repeat the process.
+To generate a pair of keys for the second hop, simply login to the any machine on the linux cluster and reenter the commands in Listings \ref{lst:genkeys} and \ref{lst:cpkeys}.
 
 \subsection{Geography login/tunnel functions}
 \label{sec:gfuncs}
@@ -146,15 +150,15 @@ Instead, raw text file containing these functions can be found at:
 
 \noindent{\small\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}}
 
-The simplest way to ``install'' these two functions is to paste the entire code block --- replacing the defaults as appropriate --- into a file in your home directory called \href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file.
+The simplest way to ``install'' these two functions is to paste the entire code block --- replacing the defaults as appropriate --- at the end of a file in your home directory called \href{http://superuser.com/questions/49289/what-is-the-bashrc-file}{.bashrc}~file.
 If this file doesn't already exist, \href{http://apple.stackexchange.com/a/119714}{as is the case on Mac OS X}, simply create it and then add the following line to the file .bash\_profile~(also in the user root directory):
 
 \begin{lstlisting}[caption={Source .bashrc on startup}, label={lst:srcbashrc}]
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 \end{lstlisting}
 
-The command \emph{geog} replaces the commands in Listings \ref{lst:logingw} and \ref{lst:loginws}, while \emph{geogport} replaces \ref{lst:tunnel1} and \ref{lst:tunnel2}.
-You can therefore work with a remote notebook by simply entering:
+The command \emph{geog} replaces the commands in Section \ref{sec:login}, while \emph{geogport} replaces Section \ref{sec:tunnel}.
+You can therefore work with a remote Notebook by simply entering:
 \begin{lstlisting}[caption={Set up and tunnel to remote Notebook server}, label={lst:usegfuncs}]
 # In one terminal
 geog
@@ -211,8 +215,8 @@ First install the program from its \href{http://www.chiark.greenend.org.uk/~sgta
 Navigate to the \emph{Session} screen and enter \texttt{\textless{}USER\textgreater{}@\textless{}GATEWAY\textgreater{}.geog.ucl.ac.uk} in the \emph{Host Name} box, making the appropriate replacements (described in Section \ref{sec:linuxmac}).
 \footnote{Follow \href{http://www.geo.mtu.edu/geoschem/docs/putty_install.html}{this guide} if you want to be able to load X11 windows (i.e. graphical programs such as \emph{gedit} or \emph{Firefox}), although this is not necessary for using Notebooks.}
 To store these gateway login settings, enter a name under \emph{Saved Sessions} and click \emph{Save} (Figure \ref{fig:putty1}).
-To set up the SSH tunnel, ensure that the settings from the previous session are loaded, then navigate to the port forwarding options via \emph{Connection} \textgreater{} \emph{SSH} \textgreater{} \emph{Auth} \textgreater{} \emph{Tunnels} (Figure \ref{fig:putty2}). 
-Under \emph{Source Port} supply \textless{}PORT\textgreater{} and enter 127.0.0.1:\textless{}PORT\textgreater{} as the \emph{Destination}, substituting \textless{}PORT\textgreater{} with a valid port number as described in Section \ref{sec:runnb}.
+To set up the SSH tunnel, ensure that the settings from the previous session are loaded, then navigate to the port forwarding options via \emph{Connection} \textgreater{} \emph{SSH} \textgreater{} \emph{Tunnels} (Figure \ref{fig:putty2}). 
+Under \emph{Source Port} supply \textless{}PORT\textgreater{} as the \emph{Destination} type 127.0.0.1:\textless{}PORT\textgreater{}, substituting \textless{}PORT\textgreater{} with a valid port number as described in Section \ref{sec:runnb}.
 Click the \emph{Add} button to commit this information to the list of \emph{Forwarded ports}.
 Finally, to save these settings, navigate back to \emph{Sessions} and enter a \textbf{new} name under \emph{Saved Sessions} before clicking \emph{Save} (Figure \ref{fig:putty3}).
 
@@ -246,11 +250,13 @@ Therefore, to remotely work with a Jupyter Notebook, simply substitute these whi
 \label{sec:trouble}
 Occasionally, when trying to set up the SSH tunnel, you will get a message like:
 \begin{quote}
+\begin{ttt}
 bind: Address already in use
 
 channel\emph{setup}fwd\_listener: cannot listen to port: \textless{}PORT\textgreater{}
 
 Could not request local forwarding
+\end{ttt}
 \end{quote}
 
 This means that the tunnel could not be established as another process is using that particular port.
