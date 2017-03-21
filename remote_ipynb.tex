@@ -16,8 +16,7 @@
 \section{Introduction}
 \label{sec:intro}
 The \href{http://jupyter.org/}{Jupyter Notebook}~(previously IPython Notebook) provides a feature-rich interactive environment for learning and using \href{https://www.python.org/}{Python}.
-If you're studying for a BSc or MSc at the University College London Department of Geography then it's likely that you've encountered these Notebooks in one or more of your modules or in the preparation of a dissertation.
-Usually you will work with them while seated at one of the workstations in Pearson 110a that form the \href{http://www.geog.ucl.ac.uk/resources/computer-support/teaching-cluster}{Geography Linux Cluster}.
+If you're studying for a BSc or MSc at the University College London Department of Geography then it's likely that you will have worked with these Notebooks in one or more of your modules or in the preparation of a dissertation, usually while seated at one of the workstations in Pearson 110a that form the \href{http://www.geog.ucl.ac.uk/resources/computer-support/teaching-cluster}{Geography Linux Cluster}.
 Since physical access to Pearson 110a is not always practical, you may wish to have \emph{remote} access to these files from another computer.
 This guide will show you how to work with Notebooks, hosted on the Linux Cluster, from your own computer. 
 
@@ -28,7 +27,7 @@ Windows users, on the other hand, must first set up a terminal emulator before f
 
 \section{On Linux/ Mac OS X}
 \label{sec:linuxmac}
-Section \ref{sec:manual} provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks.
+Section \ref{sec:manual} provides a very explicit set of instructions to get up and running with remote Jupyter Notebooks using the Linux terminal.
 If you're familiar with the command-line interface then you could skip to Section \ref{sec:auto}, where these commands are condensed to shell functions, although it's worth going through this once to ensure that everything is working smoothly.
 
 \subsection{Manual}
@@ -46,7 +45,7 @@ cmnd --flag <variable> # this does something
 \label{sec:login}
 The program \href{http://linuxcommand.org/man_pages/ssh1.html}{SSH} allows you to log into one of the machines in Pearson 110a from your own computer.
 The Linux cluster is set up in a way that requires a two-step (or \emph{multi-hop}) remote login, meaning that you must first pass through a \emph{gateway server}. 
-To make the first hop, open a terminal window and enter the command in Listing \ref{lst:logingw}, replacing \texttt{\textless{}USER\textgreater{}} with your UCL username and \texttt{\textless{}GATEWAY\textgreater{}} with the name of any one of the gateway servers (a list of their addressess can be found on the \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}).
+To make the first hop, open a terminal window and enter the command in Listing \ref{lst:logingw}, replacing \texttt{\textless{}USER\textgreater{}} with your UCL username and \texttt{\textless{}GATEWAY\textgreater{}} with the name of any one of the Geography gateway servers listed on the \href{http://www.geog.ucl.ac.uk/resources/computer-support/linux-remote-access}{Geography Remote Access page}).
 
 \begin{lstlisting}[caption={Login to gateway}, label={lst:logingw}]
 ssh <USER>@<GATEWAY>.geog.ucl.ac.uk
@@ -64,7 +63,7 @@ Are you sure you want to continue connecting (yes/no)?
 \end{ttt}
 \end{quote}
 
-Type \texttt{yes} to confirm, then enter your Geography cluster password \footnote{this is not necessarily the same password that you use for other UCL services.} when prompted to log in to the gateway server.
+Type \texttt{yes} to confirm, then enter your Geography cluster password \footnote{This is not necessarily the same password that you use for other UCL services.} when prompted to log in to the gateway server.
 
 To make the second hop, enter the command in Listing \ref{lst:loginws}, replacing \texttt{\textless{}MACHINE\textgreater{}} with the name of your favourite teaching workstation in Pearson 110a. Notice that, as you are already within the geography network, you don't have to specify \texttt{\textless{}USER\textgreater{}} or finish the address with \texttt{.geog.ucl.ac.uk} this time.
 
@@ -79,7 +78,7 @@ Simply enter your password again to complete the login to your chosen cluster ma
 
 Start running a remote Notebook server with the command in Listing \ref{lst:runnb}.
 The flag \texttt{--no-browser} prevents Firefox from opening automatically, while \texttt{--port} tells the server to listen on a particular port number.
-This is 8888 by default, although you can choose just about any integer above 1026 to replace \texttt{\textless{}PORT\textgreater{}}.
+This is set to 8888 by default, although you can choose just about any integer above 1026 to replace \texttt{\textless{}PORT\textgreater{}}.
 
 \begin{lstlisting}[caption={Run Notebook server}, label={lst:runnb}]
 jupyter notebook --no-browser --port=<PORT>
@@ -113,8 +112,7 @@ This means that the SSH tunnel is now open for business.
 \label{sec:opennb}
 
 To use the Notebook, simply open the link from the first terminal (Section \ref{sec:runnb}) using a browser on your local computer. 
-Congratulations: you should now be looking at the familiar Jupyter Notebook file browser and you can now move on to Section \ref{sec:auto} to make this whole process easier.
-Otherwise, if something has gone wrong, see \ref{sec:trouble} 
+Congratulations: you should now be looking at the familiar Jupyter Notebook file browser. If something has gone wrong, see Section \ref{sec:trouble}, otherwise move on to Section to \ref{sec:auto} to make the whole remote Notebook process easier.
 
 \subsection{Automatic}
 \label{sec:auto}
@@ -135,16 +133,16 @@ Let the program use the default file with no passphrase by presssing \emph{Enter
 ssh-copy-id <USER>@<GATEWAY>.geog.ucl.ac.uk
 \end{lstlisting}
 
-To generate a pair of keys for the second hop, simply login to the any machine on the linux cluster and reenter the commands in Listings \ref{lst:genkeys} and \ref{lst:cpkeys}.
+To generate a pair of keys for the second hop, simply login to the any Geography cluster machine and reenter the commands in Listings \ref{lst:genkeys} and \ref{lst:cpkeys}.
 
 \subsection{Geography login/tunnel functions}
 \label{sec:gfuncs}
 
 It will very quickly become tedious to perfectly type out the commands in Section \ref{sec:manual} every time you want to run a Notebook remotely.
-The two \href{https://www.shellscript.sh/functions.html}{functions} in Listing \ref{lst:gfuncs} (at the end of this document), written for \href{http://cs.lmu.edu/~ray/notes/bash/}{\emph{bash}}, condense most of this to a few short commands.
+The two \href{https://www.shellscript.sh/functions.html}{functions} in Listing \ref{lst:gfuncs} (at the end of this document), written for the \href{http://cs.lmu.edu/~ray/notes/bash/}{\emph{bash shell}}, condense most of this to a few short commands.
 
 Be aware that Listing \ref{lst:gfuncs} is for demonstration only; it does not display properly in a pdf document and so will not work if used as-is.
-Instead, raw text file containing these functions can be found at:
+Instead, a raw text file containing these functions can be found at:
 
 \noindent{\small\url{https://github.com/stainbank/remote_ipynb/blob/master/geog_functions.sh}}
 
@@ -165,14 +163,14 @@ jupyter notebook --no-browser --port=<PORT>
 geogport
 \end{lstlisting}
 
-These functions also take positional arguments, in the order:
+To allow you to change any variables from their default values, these functions also take positional arguments, in the order:
 
-\texttt{\emph{geog} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}}
+\texttt{geog \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}}
 {}
 
-\texttt{\emph{geogport} \textless{}PORT\textgreater{} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}}
+\texttt{geogport \textless{}PORT\textgreater{} \textless{}MACHINE\textgreater{} \textless{}GATEWAY\textgreater{} \textless{}USER\textgreater{}}
 
-This allows you to change any variables from their default values \footnote{You must supply all \emph{preceeding} arguments; prefix the an argument name with \textbf{\$} to use the default value}:
+Note that you must supply all \emph{preceeding} arguments, and prefix \texttt{\$} to the name of an argument to reuse its default value. Some usage examples are provided in Listing \ref{lst:gfuncsargseg}
 
 \begin{lstlisting}[caption={Examples of arguments to geography login/tunnel functions}, label={lst:gfuncsargseg}]
 geog ulanbator # change machine
