@@ -34,9 +34,9 @@ If you're familiar with the command-line interface then you could skip to Sectio
 \label{sec:manual}
 
 The \emph{Listing} boxes, such Listing \ref{lst:example} below, display lines of commands to be entered into the terminal.
-If a command contains text enclosed in angle brackets (\textbf{\textless{}\textgreater{}}) then you must replace the variable (including the brackets) as specified.
-Any text following the \textbf{\#} character is a comment and does not need to be entered.
-Many commands take \emph{flags} to specify some of their behaviour --- be careful to distinguish between the single dash (\textbf{-}) and the double dash (\textbf{-{}-}) when typing these out.
+If a command contains text enclosed in angle brackets (\texttt{\textless{}\textgreater{}}) then you must replace the variable (including the brackets) as specified.
+Any text following the \texttt{\#} character is a comment and does not need to be entered.
+Many commands take \emph{flags} to specify some of their behaviour --- be careful to distinguish between the single dash (\texttt{-}) and the double dash (\texttt{--}) when typing these out.
 \begin{lstlisting}[caption={An example of a command}, label={lst:example}]
 cmnd --flag <variable> # this does something
 \end{lstlisting}
@@ -211,10 +211,11 @@ First install the program from its \href{http://www.chiark.greenend.org.uk/~sgta
 Navigate to the \emph{Session} screen and enter \texttt{\textless{}USER\textgreater{}@\textless{}GATEWAY\textgreater{}.geog.ucl.ac.uk} in the \emph{Host Name} box, making the appropriate replacements (described in Section \ref{sec:linuxmac}).
 \footnote{Follow \href{http://www.geo.mtu.edu/geoschem/docs/putty_install.html}{this guide} if you want to be able to load X11 windows (i.e. graphical programs such as \emph{gedit} or \emph{Firefox}), although this is not necessary for using Notebooks.}
 To store these gateway login settings, enter a name under \emph{Saved Sessions} and click \emph{Save} (Figure \ref{fig:putty1}).
+
 To set up the SSH tunnel, ensure that the settings from the previous session are loaded, then navigate to the port forwarding options via \emph{Connection} \textgreater{} \emph{SSH} \textgreater{} \emph{Tunnels} (Figure \ref{fig:putty2}). 
 Under \emph{Source Port} supply \texttt{\textless{}PORT\textgreater{}}, and as the \emph{Destination} type \texttt{127.0.0.1:\textless{}PORT\textgreater{}}, substituting \textless{}PORT\textgreater{} with a valid port number as described in Section \ref{sec:runnb}.
 Click the \emph{Add} button to commit this information to the list of \emph{Forwarded ports}.
-Finally, to save these settings, navigate back to \emph{Sessions} and enter a \textbf{new} name under \emph{Saved Sessions} before clicking \emph{Save} (Figure \ref{fig:putty3}).
+Finally, to save these settings, navigate back to \emph{Sessions} and enter a \emph{new} name under \emph{Saved Sessions} before clicking \emph{Save} (Figure \ref{fig:putty3}).
 
 To work with Jupyter Notebook on the Geography Linux Cluster, open each of these session profiles in individual PuTTY windows.
 The first session you created (\emph{arch} in Figure \ref{fig:putty1}) replaces the command in Listing \ref{lst:logingw}, while the second (\emph{archport} in \ref{fig:putty3}) replaces Listing \ref{lst:tunnel1}.
